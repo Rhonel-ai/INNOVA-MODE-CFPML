@@ -1,0 +1,166 @@
+/* Tablets */
+@media (max-width: 1024px) {
+    .hero-text h2 {
+        font-size: 3.5rem;
+    }
+    
+    .candidates-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+    
+    .prime-details-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1rem;
+    }
+    
+    .header .container {
+        flex-wrap: wrap;
+    }
+    
+    .nav {
+        display: none;
+        width: 100%;
+        margin-top: 1rem;
+    }
+    
+    .nav.active {
+        display: block;
+    }
+    
+    .nav ul {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .mobile-menu {
+        display: block;
+    }
+    
+    .hero {
+        padding: 2rem 0;
+    }
+    
+    .hero-text h2 {
+        font-size: 2.5rem;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .primes-stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .banner-content {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+    }
+    
+    .prime-details {
+        justify-content: center;
+    }
+    
+    .filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .search-box {
+        min-width: 100%;
+    }
+    
+    .filter-buttons {
+        justify-content: center;
+    }
+    
+    .candidates-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .candidate-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .candidate-info {
+        margin-left: 0;
+        margin-top: 1rem;
+    }
+    
+    .candidate-actions {
+        flex-direction: column;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .section-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .modal-container {
+        margin: 1rem;
+        max-height: 95vh;
+    }
+    
+    .modal-content {
+        max-height: calc(95vh - 80px);
+    }
+    
+    .leader-details {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+    .hero-text h2 {
+        font-size: 2rem;
+    }
+    
+    .year-subtitle {
+        font-size: 1.5rem;
+    }
+    
+    .description {
+        font-size: 1rem;
+    }
+    
+    .stat-number {
+        font-size: 2.5rem;
+    }
+    
+    .prime-info h3 {
+        font-size: 1.5rem;
+    }
+    
+    .candidate-name {
+        font-size: 1.125rem;
+    }
+    
+    .votes-number {
+        font-size: 1.5rem;
+    }
+    
+    .prime-title {
+        font-size: 1.5rem;
+    }
+    
+    .prime-details-grid {
+        grid-template-columns: 1fr;
+    }
+}
