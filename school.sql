@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : dim. 22 mars 2026 à 03:44
+-- Généré le : dim. 22 mars 2026 à 04:18
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -109,7 +109,7 @@ INSERT INTO `candidates` (`id`, `last_name`, `first_name`, `school`, `city`, `bi
 (20, 'Ines', 'GOTOECHAN', 'CFPML Centre de Formation des Métiers Libéraux', 'Cotonou', '2000-05-21', 'IM13', 'Ines_IM08.jpg', 0, '2026-03-22 02:35:59', '2026-03-22 02:35:59'),
 (21, 'Ingrid', 'AHLONSOU', 'CFPML Centre de Formation des Métiers Libéraux', 'Cotonou', '1998-11-30', 'IM14', 'Ingrid_IM20.jpg', 0, '2026-03-22 02:35:59', '2026-03-22 02:35:59'),
 (22, 'Jennyfer', 'SOUNDJA', 'CFPML Centre de Formation des Métiers Libéraux', 'Cotonou', '2001-07-07', 'IM15', 'Jennyfer_IM23.jpg', 0, '2026-03-22 02:35:59', '2026-03-22 02:35:59'),
-(23, 'Lirés Sarang', 'KODO', 'CFPML Centre de Formation des Métiers Libéraux', 'Cotonou', '1999-01-28', 'IM16', 'Lirés_IM22.jpg', 0, '2026-03-22 02:35:59', '2026-03-22 02:35:59'),
+(23, 'Lirès Sarang', 'KODO', 'CFPML Centre de Formation des Métiers Libéraux', 'Cotonou', '1999-01-28', 'IM16', 'Lirès_IM22.jpg', 0, '2026-03-22 02:35:59', '2026-03-22 02:35:59'),
 (24, 'Lorryta', 'DOSSOU', 'CFPML Centre de Formation des Métiers Libéraux', 'Cotonou', '2002-06-06', 'IM17', 'Lorryta_IM01.jpg', 0, '2026-03-22 02:35:59', '2026-03-22 02:35:59'),
 (25, 'Lory', 'DOSSOU', 'CFPML Centre de Formation des Métiers Libéraux', 'Cotonou', '2000-12-24', 'IM18', 'Lory_IM13.jpg', 0, '2026-03-22 02:35:59', '2026-03-22 02:35:59'),
 (26, 'Marie - Reine', 'KOTINGAN', 'CFPML Centre de Formation des Métiers Libéraux', 'Cotonou', '1997-09-15', 'IM19', 'Marie_IM06.jpg', 0, '2026-03-22 02:35:59', '2026-03-22 02:35:59'),

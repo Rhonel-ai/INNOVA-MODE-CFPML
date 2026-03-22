@@ -789,8 +789,8 @@
 
         </div>
 
-        {{-- À AJOUTER DANS home.blade.php JUSTE AVANT LA FERMETURE DE
-    </section> --}}
+    </section> 
+    {{-- À AJOUTER DANS home.blade.php JUSTE AVANT LA FERMETURE DE--}}
 
     <!-- ========================================= -->
     <!-- MODAL DE VOTE -->
