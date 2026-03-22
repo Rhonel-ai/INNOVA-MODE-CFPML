@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mer. 17 déc. 2025 à 12:27
--- Version du serveur : 10.4.24-MariaDB
--- Version de PHP : 8.1.6
+-- Généré le : dim. 22 mars 2026 à 03:44
+-- Version du serveur : 10.4.32-MariaDB
+-- Version de PHP : 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -29,15 +29,15 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `activity_log` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `log_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `subject_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `event` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `log_name` varchar(255) DEFAULT NULL,
+  `description` text NOT NULL,
+  `subject_type` varchar(255) DEFAULT NULL,
+  `event` varchar(255) DEFAULT NULL,
   `subject_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `causer_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `causer_type` varchar(255) DEFAULT NULL,
   `causer_id` bigint(20) UNSIGNED DEFAULT NULL,
   `properties` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`properties`)),
-  `batch_uuid` char(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `batch_uuid` char(36) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -76,13 +76,13 @@ INSERT INTO `activity_log` (`id`, `log_name`, `description`, `subject_type`, `ev
 
 CREATE TABLE `candidates` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `last_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `first_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `school` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `city` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `school` varchar(255) NOT NULL,
+  `city` varchar(255) NOT NULL,
   `birth_date` date NOT NULL,
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `code` varchar(255) NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
   `votes` int(11) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -93,12 +93,36 @@ CREATE TABLE `candidates` (
 --
 
 INSERT INTO `candidates` (`id`, `last_name`, `first_name`, `school`, `city`, `birth_date`, `code`, `image`, `votes`, `created_at`, `updated_at`) VALUES
-(2, 'ODEBI', 'Maxime', 'Pylones', 'Cotonou', '2025-12-30', '0000001', '1765368750.jpg', 4, '2025-12-10 12:12:30', '2025-12-10 12:12:30'),
-(3, 'Foreman', 'Bo', 'Tempore sint maior', 'Deserunt velit in qu', '2001-12-22', '0000003', '1765372624.jpg', 2, '2025-12-10 13:17:05', '2025-12-10 13:17:05'),
 (4, 'Ortiz', 'Clarke', 'Incididunt labore ad', 'Ex et expedita est c', '2024-11-04', '0A00004', '1765372874.png', 5, '2025-12-10 13:21:14', '2025-12-10 13:21:14'),
-(5, 'Lara', 'Eleanor', 'Cumque est maxime q', 'Saepe dolor nobis co', '1993-06-26', '000005', '1765372959.jpg', 1, '2025-12-10 13:22:39', '2025-12-10 13:22:39'),
-(6, 'odebi', 'akiyemi', 'Tempore sint maior', 'Cotonou', '2025-12-31', '000006', '1765963117.jpg', 1, '2025-12-17 09:18:37', '2025-12-17 09:18:37'),
-(7, 'franck', 'Eleanor', 'Jamas', 'New York', '2025-12-17', 'SHV007', '1765968478.jpg', 0, '2025-12-17 10:47:58', '2025-12-17 10:47:58');
+(8, 'Achillande', 'ADJAÏ', 'CFPML Centre de Formation des Métiers Libéraux', 'Cotonou', '2000-03-12', 'IM01', 'Achillande_IM24.jpg', 0, '2026-03-22 02:35:59', '2026-03-22 02:35:59'),
+(9, 'Andréa', 'KUASSI', 'CFPML Centre de Formation des Métiers Libéraux', 'Cotonou', '1999-07-25', 'IM02', 'Andréa_IM21.jpg', 0, '2026-03-22 02:35:59', '2026-03-22 02:35:59'),
+(10, 'Marie Ange', 'DOSSOU', 'CFPML Centre de Formation des Métiers Libéraux', 'Cotonou', '2001-11-08', 'IM03', 'Ange_IM11.jpg', 0, '2026-03-22 02:35:59', '2026-03-22 02:35:59'),
+(11, 'Apolline', 'BANWOLA', 'CFPML Centre de Formation des Métiers Libéraux', 'Cotonou', '2002-01-19', 'IM04', 'Apolline_IM18.jpg', 0, '2026-03-22 02:35:59', '2026-03-22 02:35:59'),
+(12, 'Arielle', 'HOUSSOU', 'CFPML Centre de Formation des Métiers Libéraux', 'Cotonou', '2000-06-14', 'IM05', 'Arielle_IM07.jpg', 0, '2026-03-22 02:35:59', '2026-03-22 02:35:59'),
+(13, 'Bérénice', 'AGONMA', 'CFPML Centre de Formation des Métiers Libéraux', 'Cotonou', '1998-09-03', 'IM06', 'Bérénice_IM09.jpg', 0, '2026-03-22 02:35:59', '2026-03-22 02:35:59'),
+(14, 'Chancelle', 'HOUNDEKON', 'CFPML Centre de Formation des Métiers Libéraux', 'Cotonou', '2001-02-22', 'IM07', 'Chancelle_IM17.jpg', 0, '2026-03-22 02:35:59', '2026-03-22 02:35:59'),
+(15, 'Christelle', 'HOUETO', 'CFPML Centre de Formation des Métiers Libéraux', 'Cotonou', '1999-12-11', 'IM08', 'Christelle_IM19.jpg', 0, '2026-03-22 02:35:59', '2026-03-22 02:35:59'),
+(16, 'Cynthia', 'TOVIESSA', 'CFPML Centre de Formation des Métiers Libéraux', 'Cotonou', '2000-04-27', 'IM09', 'Cynthia_IM14.jpg', 0, '2026-03-22 02:35:59', '2026-03-22 02:35:59'),
+(17, 'Eléonore', 'AHOUANSOU', 'CFPML Centre de Formation des Métiers Libéraux', 'Cotonou', '2001-08-05', 'IM10', 'Eléonore_IM29.jpg', 0, '2026-03-22 02:35:59', '2026-03-22 02:35:59'),
+(18, 'Amékanve Estelle', 'GBOKEDE', 'CFPML Centre de Formation des Métiers Libéraux', 'Cotonou', '1997-03-17', 'IM11', 'Estelle_IM15.jpg', 0, '2026-03-22 02:35:59', '2026-03-22 02:35:59'),
+(19, 'Esther', 'HOUNKPE', 'CFPML Centre de Formation des Métiers Libéraux', 'Cotonou', '2002-10-09', 'IM12', 'Esther_IM28.jpg', 0, '2026-03-22 02:35:59', '2026-03-22 02:35:59'),
+(20, 'Ines', 'GOTOECHAN', 'CFPML Centre de Formation des Métiers Libéraux', 'Cotonou', '2000-05-21', 'IM13', 'Ines_IM08.jpg', 0, '2026-03-22 02:35:59', '2026-03-22 02:35:59'),
+(21, 'Ingrid', 'AHLONSOU', 'CFPML Centre de Formation des Métiers Libéraux', 'Cotonou', '1998-11-30', 'IM14', 'Ingrid_IM20.jpg', 0, '2026-03-22 02:35:59', '2026-03-22 02:35:59'),
+(22, 'Jennyfer', 'SOUNDJA', 'CFPML Centre de Formation des Métiers Libéraux', 'Cotonou', '2001-07-07', 'IM15', 'Jennyfer_IM23.jpg', 0, '2026-03-22 02:35:59', '2026-03-22 02:35:59'),
+(23, 'Lirés Sarang', 'KODO', 'CFPML Centre de Formation des Métiers Libéraux', 'Cotonou', '1999-01-28', 'IM16', 'Lirés_IM22.jpg', 0, '2026-03-22 02:35:59', '2026-03-22 02:35:59'),
+(24, 'Lorryta', 'DOSSOU', 'CFPML Centre de Formation des Métiers Libéraux', 'Cotonou', '2002-06-06', 'IM17', 'Lorryta_IM01.jpg', 0, '2026-03-22 02:35:59', '2026-03-22 02:35:59'),
+(25, 'Lory', 'DOSSOU', 'CFPML Centre de Formation des Métiers Libéraux', 'Cotonou', '2000-12-24', 'IM18', 'Lory_IM13.jpg', 0, '2026-03-22 02:35:59', '2026-03-22 02:35:59'),
+(26, 'Marie - Reine', 'KOTINGAN', 'CFPML Centre de Formation des Métiers Libéraux', 'Cotonou', '1997-09-15', 'IM19', 'Marie_IM06.jpg', 0, '2026-03-22 02:35:59', '2026-03-22 02:35:59'),
+(27, 'Mirabelle', 'HOUNNOUVI', 'CFPML Centre de Formation des Métiers Libéraux', 'Cotonou', '2001-03-03', 'IM20', 'Mirabelle_IM02.jpg', 0, '2026-03-22 02:35:59', '2026-03-22 02:35:59'),
+(28, 'Monique', 'AHISSOU', 'CFPML Centre de Formation des Métiers Libéraux', 'Cotonou', '1998-08-18', 'IM21', 'MONIQUE_IM10.jpg', 0, '2026-03-22 02:35:59', '2026-03-22 02:35:59'),
+(29, 'Mourchidath', 'GBADAMASSI', 'CFPML Centre de Formation des Métiers Libéraux', 'Cotonou', '2002-02-12', 'IM22', 'Mourchidath_IM07.jpg', 0, '2026-03-22 02:35:59', '2026-03-22 02:35:59'),
+(30, 'Nativita', 'AYOSSO', 'CFPML Centre de Formation des Métiers Libéraux', 'Cotonou', '2000-10-01', 'IM23', 'Nativita_IM25.jpg', 0, '2026-03-22 02:35:59', '2026-03-22 02:35:59'),
+(31, 'Onesime', 'HOUEDANOU', 'CFPML Centre de Formation des Métiers Libéraux', 'Cotonou', '1999-05-05', 'IM24', 'Onesime_IM09.jpg', 0, '2026-03-22 02:35:59', '2026-03-22 02:35:59'),
+(32, 'Pricilla', 'JOHNSON', 'CFPML Centre de Formation des Métiers Libéraux', 'Cotonou', '2001-06-30', 'IM25', 'Pricilla_IM16.jpg', 0, '2026-03-22 02:35:59', '2026-03-22 02:35:59'),
+(33, 'Roxane', 'BANKOLE', 'CFPML Centre de Formation des Métiers Libéraux', 'Cotonou', '1998-04-11', 'IM26', 'Roxane_IM05.jpg', 0, '2026-03-22 02:35:59', '2026-03-22 02:35:59'),
+(34, 'Samuel', 'AKISSOHE', 'CFPML Centre de Formation des Métiers Libéraux', 'Cotonou', '2000-01-01', 'IM27', 'Samuel_IM12.jpg', 0, '2026-03-22 02:35:59', '2026-03-22 02:35:59'),
+(35, 'Sandrina', 'KOUMAGNON', 'CFPML Centre de Formation des Métiers Libéraux', 'Cotonou', '2002-09-09', 'IM28', 'Sandrina_IM26.jpg', 0, '2026-03-22 02:35:59', '2026-03-22 02:35:59'),
+(36, 'Viviane', 'AVAHO', 'CFPML Centre de Formation des Métiers Libéraux', 'Cotonou', '1997-07-07', 'IM29', 'Viviane_IM27.jpg', 0, '2026-03-22 02:35:59', '2026-03-22 02:35:59');
 
 -- --------------------------------------------------------
 
@@ -108,12 +132,12 @@ INSERT INTO `candidates` (`id`, `last_name`, `first_name`, `school`, `city`, `bi
 
 CREATE TABLE `contrats` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `pays` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `pays` varchar(255) NOT NULL,
+  `phone` varchar(255) NOT NULL,
   `date` date NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `obejetDemande` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `obejetDemande` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -131,16 +155,33 @@ INSERT INTO `contrats` (`id`, `name`, `pays`, `phone`, `date`, `email`, `obejetD
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `events`
+--
+
+CREATE TABLE `events` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) NOT NULL,
+  `description` text DEFAULT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
+  `leader_user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `failed_jobs`
 --
 
 CREATE TABLE `failed_jobs` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` varchar(255) NOT NULL,
+  `connection` text NOT NULL,
+  `queue` text NOT NULL,
+  `payload` longtext NOT NULL,
+  `exception` longtext NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -153,8 +194,8 @@ CREATE TABLE `failed_jobs` (
 CREATE TABLE `links` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `submenu_id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `url` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -176,11 +217,11 @@ INSERT INTO `links` (`id`, `submenu_id`, `name`, `url`, `created_at`, `updated_a
 
 CREATE TABLE `menus` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `slug` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `type` enum('principal','secondaire') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'principal',
+  `type` enum('principal','secondaire') NOT NULL DEFAULT 'principal',
   `position` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -204,7 +245,7 @@ INSERT INTO `menus` (`id`, `name`, `slug`, `created_at`, `updated_at`, `type`, `
 
 CREATE TABLE `migrations` (
   `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(255) NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -236,7 +277,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (21, '2025_11_19_144736_create_newsletter_table', 14),
 (22, '2025_12_03_090607_create_workers_table', 15),
 (23, '2025_12_09_150558_create_candidates_table', 16),
-(24, '2025_12_10_112038_create_candidates_table', 17);
+(24, '2025_12_10_112038_create_candidates_table', 17),
+(25, '2025_12_19_131352_create_votes_table', 18),
+(26, '2025_12_19_131554_create_payment_logs_table', 18),
+(27, '2025_12_22_110831_create_events_table', 18);
 
 -- --------------------------------------------------------
 
@@ -246,7 +290,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 
 CREATE TABLE `model_has_permissions` (
   `permission_id` bigint(20) UNSIGNED NOT NULL,
-  `model_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_type` varchar(255) NOT NULL,
   `model_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -276,7 +320,7 @@ INSERT INTO `model_has_permissions` (`permission_id`, `model_type`, `model_id`) 
 
 CREATE TABLE `model_has_roles` (
   `role_id` bigint(20) UNSIGNED NOT NULL,
-  `model_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_type` varchar(255) NOT NULL,
   `model_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -297,7 +341,7 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 
 CREATE TABLE `newsletter` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -317,8 +361,8 @@ INSERT INTO `newsletter` (`id`, `email`, `created_at`, `updated_at`) VALUES
 --
 
 CREATE TABLE `password_resets` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -329,8 +373,8 @@ CREATE TABLE `password_resets` (
 --
 
 CREATE TABLE `password_reset_tokens` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -345,13 +389,33 @@ INSERT INTO `password_reset_tokens` (`email`, `token`, `created_at`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `payment_logs`
+--
+
+CREATE TABLE `payment_logs` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `vote_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `transaction_id` varchar(100) NOT NULL,
+  `event_type` varchar(191) NOT NULL,
+  `request_data` text DEFAULT NULL,
+  `response_data` text DEFAULT NULL,
+  `status` varchar(191) NOT NULL,
+  `error_message` text DEFAULT NULL,
+  `ip_address` varchar(45) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `permissions`
 --
 
 CREATE TABLE `permissions` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `guard_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `guard_name` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -382,11 +446,11 @@ INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at
 
 CREATE TABLE `personal_access_tokens` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_type` varchar(255) NOT NULL,
   `tokenable_id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abilities` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `token` varchar(64) NOT NULL,
+  `abilities` text DEFAULT NULL,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `expires_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -401,8 +465,8 @@ CREATE TABLE `personal_access_tokens` (
 
 CREATE TABLE `products` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `detail` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `detail` text NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -422,8 +486,8 @@ INSERT INTO `products` (`id`, `name`, `detail`, `created_at`, `updated_at`) VALU
 
 CREATE TABLE `roles` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `guard_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `guard_name` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -519,8 +583,8 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 CREATE TABLE `submenu` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `menu_id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `slug` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -544,21 +608,21 @@ INSERT INTO `submenu` (`id`, `menu_id`, `name`, `slug`, `created_at`, `updated_a
 
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `username` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `username` varchar(255) DEFAULT NULL,
+  `email` varchar(255) NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `upload` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Inactive',
-  `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `pays` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `ville` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `region` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `adresse` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `upload` varchar(255) DEFAULT NULL,
+  `status` varchar(255) NOT NULL DEFAULT 'Inactive',
+  `phone` varchar(255) DEFAULT NULL,
+  `pays` varchar(255) DEFAULT NULL,
+  `ville` varchar(255) DEFAULT NULL,
+  `region` varchar(255) DEFAULT NULL,
+  `adresse` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -573,25 +637,52 @@ INSERT INTO `users` (`id`, `name`, `username`, `email`, `email_verified_at`, `pa
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `votes`
+--
+
+CREATE TABLE `votes` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `candidate_id` bigint(20) UNSIGNED NOT NULL,
+  `voter_name` varchar(191) DEFAULT NULL,
+  `voter_phone` varchar(20) NOT NULL,
+  `is_anonymous` tinyint(1) NOT NULL DEFAULT 0,
+  `vote_count` int(11) NOT NULL DEFAULT 1,
+  `amount_paid` int(11) NOT NULL,
+  `prime_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `transaction_id` varchar(100) NOT NULL,
+  `payment_status` enum('pending','success','failed','refunded') NOT NULL DEFAULT 'pending',
+  `payment_method` varchar(191) DEFAULT NULL,
+  `payment_verified_at` timestamp NULL DEFAULT NULL,
+  `kkiapay_response` text DEFAULT NULL,
+  `kkiapay_transaction_id` varchar(191) DEFAULT NULL,
+  `ip_address` varchar(45) DEFAULT NULL,
+  `user_agent` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `workers`
 --
 
 CREATE TABLE `workers` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `first_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `last_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `profession` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `skills` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `phone` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `profession` varchar(255) NOT NULL,
+  `skills` text NOT NULL,
   `experience_years` int(11) NOT NULL,
-  `city` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `neighborhood` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `zone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `photo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `id_card` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `cv` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `city` varchar(255) NOT NULL,
+  `neighborhood` varchar(255) NOT NULL,
+  `zone` varchar(255) NOT NULL,
+  `photo` varchar(255) DEFAULT NULL,
+  `id_card` varchar(255) DEFAULT NULL,
+  `cv` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -621,6 +712,13 @@ ALTER TABLE `candidates`
 --
 ALTER TABLE `contrats`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `events`
+--
+ALTER TABLE `events`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `events_leader_user_id_foreign` (`leader_user_id`);
 
 --
 -- Index pour la table `failed_jobs`
@@ -681,6 +779,15 @@ ALTER TABLE `password_reset_tokens`
   ADD PRIMARY KEY (`email`);
 
 --
+-- Index pour la table `payment_logs`
+--
+ALTER TABLE `payment_logs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `payment_logs_vote_id_foreign` (`vote_id`),
+  ADD KEY `payment_logs_transaction_id_event_type_index` (`transaction_id`,`event_type`),
+  ADD KEY `payment_logs_transaction_id_index` (`transaction_id`);
+
+--
 -- Index pour la table `permissions`
 --
 ALTER TABLE `permissions`
@@ -730,6 +837,17 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
+-- Index pour la table `votes`
+--
+ALTER TABLE `votes`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `votes_transaction_id_unique` (`transaction_id`),
+  ADD KEY `votes_candidate_id_index` (`candidate_id`),
+  ADD KEY `votes_transaction_id_index` (`transaction_id`),
+  ADD KEY `votes_payment_status_index` (`payment_status`),
+  ADD KEY `votes_created_at_index` (`created_at`);
+
+--
 -- Index pour la table `workers`
 --
 ALTER TABLE `workers`
@@ -750,13 +868,19 @@ ALTER TABLE `activity_log`
 -- AUTO_INCREMENT pour la table `candidates`
 --
 ALTER TABLE `candidates`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT pour la table `contrats`
 --
 ALTER TABLE `contrats`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT pour la table `events`
+--
+ALTER TABLE `events`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `failed_jobs`
@@ -780,13 +904,19 @@ ALTER TABLE `menus`
 -- AUTO_INCREMENT pour la table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT pour la table `newsletter`
 --
 ALTER TABLE `newsletter`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT pour la table `payment_logs`
+--
+ALTER TABLE `payment_logs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `permissions`
@@ -825,6 +955,12 @@ ALTER TABLE `users`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
+-- AUTO_INCREMENT pour la table `votes`
+--
+ALTER TABLE `votes`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT pour la table `workers`
 --
 ALTER TABLE `workers`
@@ -833,6 +969,12 @@ ALTER TABLE `workers`
 --
 -- Contraintes pour les tables déchargées
 --
+
+--
+-- Contraintes pour la table `events`
+--
+ALTER TABLE `events`
+  ADD CONSTRAINT `events_leader_user_id_foreign` FOREIGN KEY (`leader_user_id`) REFERENCES `candidates` (`id`) ON DELETE SET NULL;
 
 --
 -- Contraintes pour la table `links`
@@ -853,6 +995,12 @@ ALTER TABLE `model_has_roles`
   ADD CONSTRAINT `model_has_roles_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
 
 --
+-- Contraintes pour la table `payment_logs`
+--
+ALTER TABLE `payment_logs`
+  ADD CONSTRAINT `payment_logs_vote_id_foreign` FOREIGN KEY (`vote_id`) REFERENCES `votes` (`id`) ON DELETE SET NULL;
+
+--
 -- Contraintes pour la table `role_has_permissions`
 --
 ALTER TABLE `role_has_permissions`
@@ -864,6 +1012,12 @@ ALTER TABLE `role_has_permissions`
 --
 ALTER TABLE `submenu`
   ADD CONSTRAINT `submenu_menu_id_foreign` FOREIGN KEY (`menu_id`) REFERENCES `menus` (`id`);
+
+--
+-- Contraintes pour la table `votes`
+--
+ALTER TABLE `votes`
+  ADD CONSTRAINT `votes_candidate_id_foreign` FOREIGN KEY (`candidate_id`) REFERENCES `candidates` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

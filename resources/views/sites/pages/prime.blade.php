@@ -575,36 +575,35 @@
     </style>
 
     <!-- ═══════════════ HERO ════════════════════════════════════ -->
-    {{-- <section class="primes-hero"> --}}
-        {{-- <div class="hero-inner"> --}}
+    <section class="primes-hero">
+        <div class="hero-inner">
 
-            {{-- <div class="hero-left"> --}}
+            <div class="hero-left">
                 <!-- Brand strip -->
-                {{-- <div class="brand-strip"> --}}
-                    {{-- <div class="brand-logo-wrap"> --}}
+                <div class="brand-strip"> 
+                    <div class="brand-logo-wrap">
                         {{-- Remplacez par : <img src="{{ asset('images/cfpml-logo.png') }}" alt="CFPML"> --}}
                         {{-- <div class="brand-logo-placeholder">CFPML</div> --}}
-                        {{-- <img src="{{ asset('site/assets/images/logo.png') }}" alt="CFPML"> --}}
-                    {{-- </div> --}}
-                    {{-- <div class="brand-meta">
+                        <img src="{{ asset('site/assets/images/logo.png') }}" alt="CFPML">
+                    </div>
+                    <div class="brand-meta">
                         <span class="brand-presenter">Présenté par</span>
                         <span class="brand-name">Centre de Formation Professionnel des Métiers Libéraux</span>
-                    </div> --}}
-                {{-- </div> --}}
+                    </div>
+                 </div>
 
-                {{-- <div class="hero-eyebrow">Compétition Innova Mode 2026</div> --}}
+                <div class="hero-eyebrow">Compétition Innova Mode 2026</div>
 
-                {{-- <h1 class="hero-title">
+                <h1 class="hero-title">
                     <em class="accent-word">Innova</em>
                     Mode<span class="year-sup">2026</span>
                 </h1>
 
-                <p class="hero-tagline">
-                    Chaque pièce est confectionnée avec une grande attention portée aux détails,
-                    reflétant notre engagement envers la qualité et le style.
-                </p>
+                <h1 class="hero-tagline">
+                    Découvrez les différentes phases de compétition et leurs récompenses
+                </h1>
 
-                <div class="hero-pills">
+                {{-- <div class="hero-pills">
                     <div class="hero-pill">
                         <i class="fas fa-trophy"></i>
                         <span>{{ $stats['total_primes'] }} phases</span>
@@ -617,11 +616,11 @@
                         <i class="fas fa-clock"></i>
                         <span>{{ $stats['upcoming'] }} à venir</span>
                     </div>
-                </div>
-            </div> --}}
+                </div> --}}
+            </div>
 
             <!-- Panneau déco droite -->
-            {{-- <div class="hero-deco">
+            <div class="hero-deco">
                 <div class="hero-deco-ghost">PHASES</div>
                 <div class="hero-deco-card">
                     <div class="deco-date">Samedi 18.04.26</div>
@@ -632,10 +631,10 @@
                     <div class="deco-time">À partir de 18h</div>
                     <div class="deco-pass">PASS · 5 000 F</div>
                 </div>
-            </div> --}}
+            </div>
 
-        {{-- </div> --}}
-    {{-- </section> --}}
+        </div>
+    </section>
 
     <!-- ═══════════════ STATS BAR ═══════════════════════════════ -->
     <section class="stats-section">
@@ -822,9 +821,6 @@
         </div>
     </section>
 
-    {{-- Modal (inchangé) --}}
-    <div class="modal-overlay" id="modalOverlay">
-        ...
-    </div>
+    
 
 @endsection

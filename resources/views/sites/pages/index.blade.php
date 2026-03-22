@@ -600,194 +600,300 @@
         </div>
     </section>
 
-    <!-- ═══════════════ STATS BAR ═══════════════════════════════ -->
-    {{-- <section class="stats-section">
-        <div class="stats-inner">
-            <div class="stat-tile">
-                <div class="stat-icon-wrap"><i class="fas fa-trophy"></i></div>
-                <div class="stat-text">
-                    <div class="stat-number">{{ $stats['total_primes'] }}</div>
-                    <div class="stat-label">Phases Total</div>
+    
+    
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <div class="stat-number" id="totalVotes">0</div>
+                    <div class="stat-label">VOTES TOTAUX</div>
                 </div>
-            </div>
-            <div class="stat-tile">
-                <div class="stat-icon-wrap"><i class="fas fa-play-circle"></i></div>
-                <div class="stat-text">
-                    <div class="stat-number">{{ $stats['in_progress'] }}</div>
-                    <div class="stat-label">En Cours</div>
-                </div>
-            </div>
-            <div class="stat-tile">
-                <div class="stat-icon-wrap"><i class="fas fa-clock"></i></div>
-                <div class="stat-text">
-                    <div class="stat-number">{{ $stats['upcoming'] }}</div>
-                    <div class="stat-label">À Venir</div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-number" id="totalCandidates">{{ count($candidates) }}</div>
+                    <div class="stat-label">CANDIDATS</div>
                 </div>
             </div>
         </div>
+    </section>
+
+    
+    <!-- Current Prime Banner -->
+    <section class="prime-banner">
+        <div class="container">
+            <div class="banner-content">
+                <div class="prime-badge">
+                    <span class="badge-label">PHASE EN COURS</span>
+                    <span class="badge-dot pulse"></span>
+                </div>
+                <div class="prime-info">
+                    <h3>PHASE 2</h3>
+                    <p class="prime-description">seconde phase prestation publique</p>
+                    <div class="prime-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Début</span>
+                            <span class="detail-value">29/11/2025</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Fin</span>
+                            <span class="detail-value">06/12/2025</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Prix par vote</span>
+                            <span class="detail-value">100 FCFA</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Candidats</span>
+                            <span class="detail-value">{{ $totalCandidats}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="current-leader">
+                    <div class="leader-badge">LEADER ACTUEL</div>
+                    <div class="leader-info">
+                        <div class="leader-name">{{ $topUser->first_name }} {{ $topUser->last_name }}</div>
+                        <div class="leader-votes">{{ $topUser->votes }} votes</div>
+                        <div class="leader-code">Code: {{ $topUser->code }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filters Section -->
+    <section class="filters-section">
+        <div class="container">
+            <div class="filters">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Rechercher un(e) candidat(e)" id="searchCandidate">
+                </div>
+                <!-- <div class="filter-buttons">
+                    <button class="filter-btn active">Toutes catégories</button>
+                    <button class="filter-btn">Toutes paroisses</button>
+                    <button class="filter-btn">Par votes</button>
+                </div> -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Candidates Section -->
+    <section class="candidates-section">
+        <div class="container">
+            <div class="section-header">
+                <h2><i class="fas fa-bullseye"></i> PHASE EN COURS</h2>
+                <div class="section-stats">
+                    <span id="currentTotalVotes">0 votes totaux</span>
+                    <span class="dot">•</span>
+                    <span id="currentTotalCandidates">{{ count($candidates) }} candidats</span>
+                </div>
+            </div>
+
+            <!-- Champ de recherche ajouté pour la fonctionnalité JS -->
+            <!-- <div class="search-bar mb-4">
+                <input type="text" id="searchCandidate" placeholder="Rechercher un candidat par nom, école ou code...">
+            </div> -->
+
+            <div class="candidates-grid" id="candidatesContainer">
+                @php
+                    // Assurez-vous que $candidates est une collection pour utiliser sortByDesc
+                    $candidatesCollection = collect($candidates);
+                    $sortedCandidates = $candidatesCollection->sortByDesc('votes');
+                    $maxVotes = $sortedCandidates->first()->votes ?? 0;
+                    $totalVotes = $candidatesCollection->sum('votes');
+
+                    // NOUVEAU: Pré-calcul des données pour l'injection JavaScript (méthode simple)
+                    $candidatesDataForJs = $sortedCandidates->map(function ($candidate) use ($totalVotes) {
+                        $percentage = $totalVotes > 0 ? round(($candidate->votes / $totalVotes) * 100, 2) : 0;
+                        return [
+                            'id' => $candidate->id,
+                            'first_name' => $candidate->first_name,
+                            'last_name' => $candidate->last_name,
+                            'name' => $candidate->first_name . ' ' . $candidate->last_name,
+                            'school' => $candidate->school,
+                            'code' => $candidate->code,
+                            'votes' => $candidate->votes,
+                            'percentage' => $percentage,
+                            'image' => $candidate->image,
+                        ];
+                    })->values()->all(); // Assure un tableau propre pour le JS
+                @endphp
+
+                @foreach($sortedCandidates as $index => $candidate)
+                    @php
+                        $rank = $index + 1;
+                        $isLeader = $candidate->votes == $maxVotes && $maxVotes > 0;
+                        // Calcul du pourcentage
+                        $percentage = $totalVotes > 0 ? round(($candidate->votes / $totalVotes) * 100, 2) : 0;
+
+                        // Préparation des données pour la recherche JS
+                        $searchData = [
+                            'name' => $candidate->first_name . ' ' . $candidate->last_name,
+                            'school' => $candidate->school,
+                            'code' => $candidate->code,
+                        ];
+                    @endphp
+
+                    <div class="candidate-card {{ $isLeader ? 'leader border-primary' : '' }} h-100"
+                        data-id="{{ $candidate->id }}" data-search-name="{{ strtolower($searchData['name']) }}"
+                        data-search-school="{{ strtolower($searchData['school']) }}"
+                        data-search-code="{{ strtolower($searchData['code']) }}">
+
+                        <div class="candidate-header">
+                            <div class="candidate-rank">{{ $rank }}</div>
+                            <div class="candidate-image-container">
+                                <img src="{{ $candidate->image ? asset('uploads/candidates/' . $candidate->image) : asset('assets/images/test.jpeg') }}"
+                                    alt="{{ $candidate->first_name }} {{ $candidate->last_name }}" class="candidate-image"
+                                    onerror="this.onerror=null; this.src='{{ asset('assets/images/test.jpeg') }}';">
+                            </div>
+                            <div class="candidate-info">
+                                <h3 class="candidate-name">{{ $candidate->first_name }} {{ $candidate->last_name }}</h3>
+                                <p class="candidate-parish">{{ $candidate->school }}</p>
+                                <p class="candidate-code">{{ $candidate->code }}</p>
+                            </div>
+                        </div>
+
+                        <div class="candidate-votes">
+                            <div class="votes-number"> {{ $candidate->votes }}</div>
+                            <div class="votes-percentage"> ({{ $percentage }}%)</div>
+                        </div>
+
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: {{ $percentage }}%"></div>
+                        </div>
+
+                        <div class="candidate-actions">
+                            <!-- data-candidate-id utilise l'ID réel du candidat -->
+                            <button class="share-btn" data-candidate-id="{{ $candidate->id }}">
+                                <i class="fas fa-share-alt"></i>
+                                PARTAGER
+                            </button>
+                            <!-- data-candidate-id utilise l'ID réel du candidat -->
+                            <button class="vote-btn" data-candidate-id="{{ $candidate->id }}">
+                                <i class="fas fa-vote-yea"></i>
+                                VOTER MAINTENANT
+                            </button>
+                        </div>
+                    </div>
+
+                @endforeach
+            </div>
+
+
+        </div>
+
+        {{-- À AJOUTER DANS home.blade.php JUSTE AVANT LA FERMETURE DE
     </section> --}}
 
-    <!-- ═══════════════ PHASES / EVENTS ════════════════════════ -->
-    {{-- <section class="phases-section"> --}}
-        {{-- <div class="phases-container"> --}}
-
-            {{-- <div class="section-header">
-                <span class="section-overline">Compétition · Innova Mode 2026</span>
-                <h2 class="section-title">Les <span class="accent">Phases</span></h2>
-                <div class="section-rule"><span class="rule-diamond"></span></div>
-            </div> --}}
-
-            {{-- ── EN COURS ── --}}
-            {{-- @foreach ($eventsInProgress as $event)
-            <div class="event-card active">
-                <div class="card-header-panel">
-                    <div>
-                        <div class="status-row">
-                            <span class="status-pill pill-active"><span class="pulse-dot"></span> En Cours</span>
-                            <span class="card-time-remaining">{{ $event->time_remaining }}</span>
-                        </div>
-                        <h3 class="card-event-name">{{ $event->name }}</h3>
-                        <p class="card-event-desc">{{ $event->description }}</p>
-                    </div>
-                    @if ($stats['topUser'])
-                    <div class="leader-block" style="margin-top:24px;">
-                        <div class="leader-overline">Leader actuel</div>
-                        <div class="leader-name-display">{{ $stats['topUser']->first_name }} {{ $stats['topUser']->last_name }}</div>
-                        <div class="leader-sub">
-                            <span class="leader-badge"><i class="fas fa-vote-yea"></i> {{ $stats['topUser']->votes }} votes</span>
-                            <span class="leader-badge">Code : {{ $stats['topUser']->code }}</span>
-                        </div>
-                    </div>
-                    @endif
-                </div>
-                <div class="card-body-panel">
-                    <div class="details-grid">
-                        <div class="detail-cell">
-                            <span class="detail-cell-label">Candidats</span>
-                            <span class="detail-cell-value">{{ $stats['totalCandidats'] }}</span>
-                        </div>
-                        <div class="detail-cell">
-                            <span class="detail-cell-label">Votes</span>
-                            <span class="detail-cell-value">{{ $stats['totalVotes'] }}</span>
-                        </div>
-                        <div class="detail-cell">
-                            <span class="detail-cell-label">Début</span>
-                            <span class="detail-cell-value">{{ $event->start_date->format('d/m/Y') }}</span>
-                        </div>
-                        <div class="detail-cell">
-                            <span class="detail-cell-label">Fin</span>
-                            <span class="detail-cell-value">{{ $event->end_date->format('d/m/Y') }}</span>
-                        </div>
-                    </div>
-                    <div class="card-footer-row">
-                        <div class="price-tag">
-                            <span class="price-lbl">Prix par vote</span>
-                            <span class="price-val">100 FCFA</span>
-                        </div>
-                        <button class="btn-vote btn-vote-active" onclick="window.location.href='/'">
-                            <i class="fas fa-hand-point-up"></i> Voter Maintenant
-                        </button>
-                    </div>
-                </div>
+    <!-- ========================================= -->
+    <!-- MODAL DE VOTE -->
+    <!-- ========================================= -->
+    <div class="modal-overlay" id="modalOverlay" style="display: none !important;">
+        <div class="modal-container" id="voteModal">
+            <div class="modal-header">
+                <h3><i class="fas fa-vote-yea"></i> Voter maintenant</h3>
+                <button class="close-modal" id="closeModal" type="button">&times;</button>
             </div>
-            @endforeach --}}
-
-            {{-- ── À VENIR ── --}}
-            {{-- @foreach ($upcomingEvents as $event)
-            <div class="event-card upcoming">
-                <div class="card-header-panel">
-                    <div>
-                        <div class="status-row">
-                            <span class="status-pill pill-upcoming">À Venir</span>
-                        </div>
-                        <h3 class="card-event-name">{{ $event->name }}</h3>
-                        <p class="card-event-desc">{{ $event->description }}</p>
-                    </div>
-                </div>
-                <div class="card-body-panel">
-                    <div class="details-grid">
-                        <div class="detail-cell">
-                            <span class="detail-cell-label">Candidats</span>
-                            <span class="detail-cell-value">—</span>
-                        </div>
-                        <div class="detail-cell">
-                            <span class="detail-cell-label">Votes</span>
-                            <span class="detail-cell-value">0</span>
-                        </div>
-                        <div class="detail-cell">
-                            <span class="detail-cell-label">Début</span>
-                            <span class="detail-cell-value">{{ $event->start_date->format('d/m/Y') }}</span>
-                        </div>
-                        <div class="detail-cell">
-                            <span class="detail-cell-label">Fin</span>
-                            <span class="detail-cell-value">{{ $event->end_date->format('d/m/Y') }}</span>
-                        </div>
-                    </div>
-                    <div class="card-footer-row">
-                        <div class="price-tag">
-                            <span class="price-lbl">Prix par vote</span>
-                            <span class="price-val">100 FCFA</span>
-                        </div>
-                        <button class="btn-vote btn-vote-disabled" disabled>Indisponible</button>
-                    </div>
-                </div>
+            <div class="modal-content" id="modalContent">
+                <!-- Contenu généré dynamiquement par modal.js -->
             </div>
-            @endforeach --}}
-
-            {{-- ── TERMINÉS ── --}}
-            {{-- @foreach ($completedEvents as $event)
-            <div class="event-card completed">
-                <div class="card-header-panel">
-                    <div>
-                        <div class="status-row">
-                            <span class="status-pill pill-completed">Terminé</span>
-                        </div>
-                        <h3 class="card-event-name">{{ $event->name }}</h3>
-                        <p class="card-event-desc">{{ $event->description }}</p>
-                    </div>
-                    @if ($event->leader)
-                    <div class="leader-block winner-block" style="margin-top:24px;">
-                        <div class="leader-overline">🏆 Gagnant</div>
-                        <div class="leader-name-display">{{ $event->leader->first_name }} {{ $event->leader->last_name }}</div>
-                    </div>
-                    @endif
-                </div>
-                <div class="card-body-panel">
-                    <div class="details-grid">
-                        <div class="detail-cell">
-                            <span class="detail-cell-label">Candidats</span>
-                            <span class="detail-cell-value">—</span>
-                        </div>
-                        <div class="detail-cell">
-                            <span class="detail-cell-label">Votes</span>
-                            <span class="detail-cell-value">—</span>
-                        </div>
-                        <div class="detail-cell">
-                            <span class="detail-cell-label">Début</span>
-                            <span class="detail-cell-value">{{ $event->start_date->format('d/m/Y') }}</span>
-                        </div>
-                        <div class="detail-cell">
-                            <span class="detail-cell-label">Fin</span>
-                            <span class="detail-cell-value">{{ $event->end_date->format('d/m/Y') }}</span>
-                        </div>
-                    </div>
-                    <div class="card-footer-row">
-                        <div class="price-tag">
-                            <span class="price-lbl">Prix par vote</span>
-                            <span class="price-val">100 FCFA</span>
-                        </div>
-                        <button class="btn-vote btn-vote-disabled" disabled>Indisponible</button>
-                    </div>
-                </div>
-            </div>
-            @endforeach --}}
-
-        {{-- </div> --}}
-    {{-- </section> --}}
-
-    {{-- Modal (inchangé) --}}
-    <div class="modal-overlay" id="modalOverlay">
-        ...
+        </div>
     </div>
+
+    <!-- ========================================= -->
+    <!-- MODAL DE PARTAGE -->
+    <!-- ========================================= -->
+    <div class="modal-overlay" id="shareOverlay" style="display: none !important;">
+        <div class="modal-container" id="shareModal">
+            <div class="modal-header">
+                <h3><i class="fas fa-share-alt"></i> Partager ce candidat</h3>
+                <button class="close-modal" id="closeShare" type="button">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="share-description">
+                    Partagez ce candidat avec vos amis et encouragez-les à voter !
+                </p>
+
+                <div class="share-options">
+                    <button class="share-option whatsapp" data-platform="whatsapp" type="button">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>WhatsApp</span>
+                    </button>
+
+                    <button class="share-option facebook" data-platform="facebook" type="button">
+                        <i class="fab fa-facebook"></i>
+                        <span>Facebook</span>
+                    </button>
+
+                    <button class="share-option twitter" data-platform="twitter" type="button">
+                        <i class="fab fa-twitter"></i>
+                        <span>Twitter</span>
+                    </button>
+
+                    <button class="share-option copy" data-platform="copy" type="button">
+                        <i class="fas fa-link"></i>
+                        <span>Copier le lien</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    {{-- À METTRE DANS home.blade.php JUSTE AVANT @endsection --}}
+
+    @push('scripts')
+        <script>
+            // =================================================================
+            // INJECTION DES DONNÉES POUR LES SCRIPTS JS
+            // =================================================================
+            (function () {
+                console.log('📊 Injection des données des candidats...');
+
+                // Pré-calculer les données des candidats
+                @php
+                    $candidatesCollection = collect($candidates);
+                    $totalVotes = $candidatesCollection->sum('votes');
+
+                    $candidatesDataForJs = $candidatesCollection->map(function ($candidate) use ($totalVotes) {
+                        $percentage = $totalVotes > 0 ? round(($candidate->votes / $totalVotes) * 100, 2) : 0;
+                        return [
+                            'id' => $candidate->id,
+                            'first_name' => $candidate->first_name,
+                            'last_name' => $candidate->last_name,
+                            'name' => $candidate->first_name . ' ' . $candidate->last_name,
+                            'school' => $candidate->school,
+                            'code' => $candidate->code,
+                            'votes' => $candidate->votes,
+                            'percentage' => $percentage,
+                            'image' => $candidate->image,
+                        ];
+                    })->values()->all();
+                @endphp
+
+                // Injecter dans window.APP_CONFIG
+                window.APP_CONFIG = {
+                    candidatesData: @json($candidatesDataForJs),
+                    currentPrime: {
+                        title: 'Phase 2',
+                        description: 'seconde phase prestation publique',
+                        pricePerVote: 100
+                    },
+                    isReady: false
+                };
+
+                console.log('✅ Données injectées:', window.APP_CONFIG.candidatesData.length, 'candidats');
+                console.log('📋 Premier candidat:', window.APP_CONFIG.candidatesData[0]);
+            })();
+        </script>
+    @endpush
+
 
 @endsection
